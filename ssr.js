@@ -2,18 +2,60 @@
 // pool of choices for the game
 const pool = ['Scissor', 'Rock', 'Paper'];
 
+// possible scores of the Game
+const scoreLines = [
+  '0 : 0',
+  '1 : 0',
+  '0 : 1',
+  '1 : 1',
+  '2 : 1',
+  '1 : 2',
+  '2 : 0',
+  '0 : 2',
+];
+
 // freeze makes the pool uneditable
 Object.freeze(pool);
 console.log(pool);
+//------------------------------------------------------------------------------------
+//   player class
+class Player {
+  constructor(userName, score, amountOfGames) {
+    this.userName = userName;
+    this.score = score;
+    this.amountOfGames = amountOfGames;
+  }
+  winMsg() {
+    return `Strike!!`;
+  }
+  looseMsg() {
+    return `Looser!!`;
+  }
+  addToScore() {
+    this.score++;
+  }
+  showScore() {
+    return `Ỳou have won ${this.score} games so far...`;
+  }
+  showAmountOfGames() {
+    return `You have played ${this.amountOfGames} so far...carry on!`;
+  }
+  showStatistic() {
+    const stat = (this.score / this.amountOfGames) * 100;
+    return `You have won ${stat}% of all games.`;
+  }
+}
+//------------------------------------------------------------------------------------
 
-//prompt-sync npm package stuff
-const prompt = require('prompt');
-prompt.start();
-// const prompt = promptSync();
-
-//Formula:  Math.floor(Math.random() * (max - min + 1) + min);
+// Game Logic
 
 // Compare Function
+
+/*a is player and b is radnom Function
+when a wins: res is -1
+when b wins: res is 1
+if their even: res is 0*/
+
 function compare(a, b) {
   let res;
   if (a === b) {
@@ -55,9 +97,8 @@ function compare(a, b) {
       break;
   }
 }
-
 //------------------------------------------------------------------------------------
-// first testing
+// testing game Logic
 // console.log(compare('Scissor', 'Scissor')); // 0
 // console.log(compare('Scissor', 'Rock')); // 1
 // console.log(compare('Scissor', 'Paper')); // -1
@@ -70,4 +111,12 @@ function compare(a, b) {
 // console.log(compare('Paper', 'Rock')); // -1
 // console.log(compare('Paper', 'Scissor')); // 1
 //------------------------------------------------------------------------------------
-prompt.get('choice');
+
+// randon Function
+
+const choose = () => {
+  return Math.floor(Math.random() * 3);
+};
+
+// console.log(choose()); // random test
+//------------------------------------------------------------------------------------

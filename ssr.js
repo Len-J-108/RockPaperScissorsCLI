@@ -16,7 +16,7 @@ const scoreLines = [
 
 // freeze makes the pool uneditable
 Object.freeze(pool);
-console.log(pool);
+// console.log(pool);
 //------------------------------------------------------------------------------------
 //   player class
 class Player {
@@ -26,10 +26,13 @@ class Player {
     this.amountOfGames = amountOfGames;
   }
   winMsg() {
-    return `Strike!!`;
+    return `, you won!`;
   }
   looseMsg() {
-    return `Looser!!`;
+    return `, you lost!`;
+  }
+  evenMsg() {
+    return `even...`;
   }
   addToScore() {
     this.score++;
@@ -58,21 +61,20 @@ if their even: res is 0*/
 
 function compare(a, b) {
   let res;
-  if (a === b) {
-    res = 0;
-    return res;
-  }
+  let mmsg = '';
+  // if (a === b) {
+  //   res = 0;
+  //   return res;
+  // }
   switch (a) {
     case 'Scissor':
       if (b === 'Rock') {
         res = 1;
         return res;
-        //   break;
       }
       if (b === 'Paper') {
         res = -1;
         return res;
-        //   break;
       }
       break;
     case 'Rock':
@@ -112,11 +114,57 @@ function compare(a, b) {
 // console.log(compare('Paper', 'Scissor')); // 1
 //------------------------------------------------------------------------------------
 
-// randon Function
+// randon Function ----> Math.floor(Math.random() * (max - min + 1) + min) <----
 
-const choose = () => {
-  return Math.floor(Math.random() * 3);
+const chooseRandom = () => {
+  return Math.floor(Math.random() * 3); // between 0 and 2 (indices of pool)
 };
 
-// console.log(choose()); // random test
+// console.log(chooseRandom()); // random test
 //------------------------------------------------------------------------------------
+
+// Main Game
+
+// create instance fo Player
+const playerOne = new Player('Naomi', 0, 0);
+
+
+//single Game Function with compare as inner function
+const singeGame = (valA, valB) => {
+  valB = pool[chooseRandom()];
+  compare(valA, valB)
+}
+
+
+//function
+const wholeGame = (
+  a_SingleScore = 0,
+  b_SingleScore = 0,
+  a_MetaScore = 0,
+  b_MetaScore = 0
+) => {
+  if (a_MetaScore > 1) {
+    console.log(`Player A wins the game`);
+    return;
+  }
+  if (b_MetaScore > 1) {
+    console.log(`Player B wins the game`);
+    return;
+  }
+  let play = (val) => {
+    // console.log(val);
+    if (val === 0) {
+      console.log(playerOne.evenMsg());
+    }
+    if (val === -1) {
+      console.log(playerOne.userName, playerOne.winMsg());
+    }
+    if (val === 1) {
+      console.log(playerOne.userName, playerOne.looseMsg());
+    }
+
+    return val;
+  };
+  play(scissor);
+};
+// wholeGame();

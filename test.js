@@ -162,13 +162,8 @@ let a_SingleScore = 0;
 let b_SingleScore = 0;
 let a_MetaScore = 0;
 let b_MetaScore = 0;
-const wholeGame = (a_SingleScore, b_SingleScore, a_MetaScore, b_MetaScore) => {
+let wholeGame = (a_SingleScore, b_SingleScore, a_MetaScore, b_MetaScore) => {
   for (let i = 1; i <= 20; i++) {
-    // console.log(`ROUND ${i}:`);
-    // console.log(`A single: ${a_SingleScore}`);
-    // console.log(`B single: ${b_SingleScore}`);
-    // console.log(`A meta: ${a_MetaScore}`);
-    // console.log(`B meta: ${b_MetaScore}`);
     if (a_MetaScore > 1) {
       console.log(`Player A wins the game`);
       return;
@@ -188,6 +183,7 @@ const wholeGame = (a_SingleScore, b_SingleScore, a_MetaScore, b_MetaScore) => {
     play(a_SingleScore, b_SingleScore);
   }
 };
-
+// console.time();
 wholeGame(a_SingleScore, b_SingleScore, a_MetaScore, b_MetaScore);
 // wholeGame(0, 0, 0, 0);
+// console.timeEnd();

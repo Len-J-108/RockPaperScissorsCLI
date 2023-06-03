@@ -2,28 +2,20 @@
 // pool of choices for the game
 const pool = ['Scissor', 'Rock', 'Paper'];
 
-// possible scores of the Game
-const scoreLines = [
-  '0 : 0',
-  '1 : 0',
-  '0 : 1',
-  '1 : 1',
-  '2 : 1',
-  '1 : 2',
-  '2 : 0',
-  '0 : 2',
-];
-
 // freeze makes the pool uneditable
 Object.freeze(pool);
 // console.log(pool);
 //------------------------------------------------------------------------------------
 //   player class
 class Player {
-  constructor(userName, score, amountOfGames) {
+  constructor(userName, score, amountOfPlayedGames) {
     this.userName = userName;
     this.score = score;
-    this.amountOfGames = amountOfGames;
+    this.amountOfPlayedGames = amountOfPlayedGames;
+  }
+  showPlayerdetails() {
+    console.log(`Name: ${this.userName}`);
+    console.log(`Score: ${this.score}`);
   }
   winMsg() {
     return `, you won!`;
@@ -32,7 +24,9 @@ class Player {
     return `, you lost!`;
   }
   evenMsg() {
-    return `even...`;
+    return `even...
+    
+    `;
   }
   addToScore() {
     this.score++;
@@ -40,11 +34,11 @@ class Player {
   showScore() {
     return `Ỳou have won ${this.score} games so far...`;
   }
-  showAmountOfGames() {
-    return `You have played ${this.amountOfGames} so far...carry on!`;
+  showAmountOfPlayedGames() {
+    return `You have played ${this.amountOfPlayedGames} so far...carry on!`;
   }
   showStatistic() {
-    const stat = (this.score / this.amountOfGames) * 100;
+    const stat = (this.score / this.amountOfPlayedGames) * 100;
     return `You have won ${stat}% of all games.`;
   }
 }
@@ -60,45 +54,19 @@ when b wins: res is 1
 if their even: res is 0*/
 
 function compare(a, b) {
-  let res;
-  let mmsg = '';
-  // if (a === b) {
-  //   res = 0;
-  //   return res;
-  // }
+  if (a === b) {
+    return 0;
+  }
   switch (a) {
     case 'Scissor':
-      if (b === 'Rock') {
-        res = 1;
-        return res;
-      }
-      if (b === 'Paper') {
-        res = -1;
-        return res;
-      }
-      break;
+      return b === 'Rock' ? 1 : -1;
     case 'Rock':
-      if (b === 'Paper') {
-        res = 1;
-        return res;
-      }
-      if (b === 'Scissor') {
-        res = -1;
-        return res;
-      }
-      break;
+      return b === 'Paper' ? 1 : -1;
     case 'Paper':
-      if (b === 'Rock') {
-        res = -1;
-        return res;
-      }
-      if (b === 'Scissor') {
-        res = 1;
-        return res;
-      }
-      break;
+      return b === 'Scissor' ? 1 : -1;
   }
 }
+
 //------------------------------------------------------------------------------------
 // testing game Logic
 // console.log(compare('Scissor', 'Scissor')); // 0
@@ -126,45 +94,51 @@ const chooseRandom = () => {
 // Main Game
 
 // create instance fo Player
-const playerOne = new Player('Naomi', 0, 0);
-
+const playerOne = new Player('Rudon', 0, 0);
 
 //single Game Function with compare as inner function
-const singeGame = (valA, valB) => {
-  valB = pool[chooseRandom()];
-  compare(valA, valB)
-}
-
+const singleGame = (valA, valB = pool[chooseRandom()]) => {
+  console.log(`${valA} : ${valB}`);
+  return compare(valA, valB);
+};
+// singleGame(pool[1], pool[0]) // singlGame test
 
 //function
-const wholeGame = (
-  a_SingleScore = 0,
-  b_SingleScore = 0,
-  a_MetaScore = 0,
-  b_MetaScore = 0
-) => {
-  if (a_MetaScore > 1) {
-    console.log(`Player A wins the game`);
-    return;
+let count = { countA: 0, countB: 0 };
+const mainGame = (val) => {
+  let { countA, countB } = count;
+  for (let i = 0; i < 10; i++) {
+    console.log(`ROUND ${i + 1}`);
+    const game = singleGame(val);
+    game === 0
+      ? console.log(playerOne.evenMsg())
+      : game < 0
+      ? countA++
+      : countB++;
+    console.log(`${playerOne.userName}: ${countA} / computer: ${countB}
+    
+    `);
+    if (countA > 1) {
+      playerOne.addToScore();
+      playerOne.amountOfPlayedGames++;
+      return console.log(playerOne.userName, playerOne.winMsg());
+    }
+    if (countB > 1) {
+      playerOne.amountOfPlayedGames++;
+      return console.log(playerOne.userName, playerOne.looseMsg());
+    }
   }
-  if (b_MetaScore > 1) {
-    console.log(`Player B wins the game`);
-    return;
-  }
-  let play = (val) => {
-    // console.log(val);
-    if (val === 0) {
-      console.log(playerOne.evenMsg());
-    }
-    if (val === -1) {
-      console.log(playerOne.userName, playerOne.winMsg());
-    }
-    if (val === 1) {
-      console.log(playerOne.userName, playerOne.looseMsg());
-    }
-
-    return val;
-  };
-  play(scissor);
 };
-// wholeGame();
+// mainGame(pool[0]); // main game test
+
+const bigGame = (num) => {
+  for (let i = 0; i < num; i++) {
+    console.log(`G A M E : ${i + 1}`);
+    mainGame(pool[chooseRandom()]);
+  }
+  console.log(playerOne.showAmountOfPlayedGames());
+  console.log(playerOne.showScore());
+  console.log(playerOne.showStatistic());
+  return;
+};
+// bigGame(8); // big game test

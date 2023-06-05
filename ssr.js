@@ -108,7 +108,7 @@ let count = { countA: 0, countB: 0 };
 const mainGame = (val) => {
   let { countA, countB } = count;
   let i = 1;
-  while (countA <= 1 || countB <= 1) {
+  while (countA + countB < 3) {
     console.log(`ROUND ${i}`);
     const game = singleGame(val);
     game === 0

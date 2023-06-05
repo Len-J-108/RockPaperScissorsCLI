@@ -107,8 +107,9 @@ const singleGame = (valA, valB = pool[chooseRandom()]) => {
 let count = { countA: 0, countB: 0 };
 const mainGame = (val) => {
   let { countA, countB } = count;
-  for (let i = 0; i < 10; i++) {
-    console.log(`ROUND ${i + 1}`);
+  let i = 1;
+  while (countA <= 1 || countB <= 1) {
+    console.log(`ROUND ${i}`);
     const game = singleGame(val);
     game === 0
       ? console.log(playerOne.evenMsg())
@@ -116,20 +117,22 @@ const mainGame = (val) => {
       ? countA++
       : countB++;
     console.log(`${playerOne.userName}: ${countA} / computer: ${countB}
-    
-    `);
-    if (countA > 1) {
-      playerOne.addToScore();
-      playerOne.amountOfPlayedGames++;
-      return console.log(playerOne.userName, playerOne.winMsg());
-    }
-    if (countB > 1) {
-      playerOne.amountOfPlayedGames++;
-      return console.log(playerOne.userName, playerOne.looseMsg());
-    }
+      
+      `);
+    i++;
+  }
+  if (countA > 1) {
+    playerOne.addToScore();
+    playerOne.amountOfPlayedGames++;
+    return console.log(playerOne.userName, playerOne.winMsg());
+  }
+  if (countB > 1) {
+    playerOne.amountOfPlayedGames++;
+    return console.log(playerOne.userName, playerOne.looseMsg());
   }
 };
-// mainGame(pool[0]); // main game test
+
+mainGame(pool[0]); // main game test
 
 const bigGame = (num) => {
   for (let i = 0; i < num; i++) {

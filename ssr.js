@@ -8,7 +8,7 @@ Object.freeze(pool);
 //------------------------------------------------------------------------------------
 //   player class
 class Player {
-  constructor(userName, score, amountOfPlayedGames) {
+  constructor(userName, score = 0, amountOfPlayedGames = 0) {
     this.userName = userName;
     this.score = score;
     this.amountOfPlayedGames = amountOfPlayedGames;
@@ -43,15 +43,33 @@ class Player {
   }
 }
 //------------------------------------------------------------------------------------
+// create instance fo Player
+const playerOne = new Player('Charly', 0, 0);
+//------------------------------------------------------------------------------------
+// class tesing
+// console.log(playerOne.showPlayerdetails());
+
+// console.log(playerOne.winMsg());
+// console.log(playerOne.looseMsg());
+// console.log(playerOne.evenMsg());
+
+// console.log(playerOne.showScore());;
+// console.log(playerOne.showAmountOfPlayedGames());
+// console.log(playerOne.showStatistic());
+//------------------------------------------------------------------------------------
 
 // Game Logic
 
+//  Scissor beats Paper
+//  Rock beats Scissor
+//  Paper beats Rock
+
 // Compare Function
 
-/*a is player and b is radnom Function
-when a wins: res is -1
-when b wins: res is 1
-if their even: res is 0*/
+/*  a is player and b is radnom Function
+    when a wins: res is -1
+    when b wins: res is 1
+    if their even: res is 0*/
 
 function compare(a, b) {
   if (a === b) {
@@ -93,15 +111,13 @@ const chooseRandom = () => {
 
 // Main Game
 
-// create instance fo Player
-const playerOne = new Player('Rudon', 0, 0);
-
 //single Game Function with compare as inner function
 const singleGame = (valA, valB = pool[chooseRandom()]) => {
   console.log(`${valA} : ${valB}`);
   return compare(valA, valB);
 };
-// singleGame(pool[1], pool[0]) // singlGame test
+singleGame(pool[1], pool[0]); // singlGame test
+// console.log(singleGame(pool[1], pool[0]));
 
 //function
 let count = { countA: 0, countB: 0 };
@@ -132,7 +148,7 @@ const mainGame = (val) => {
   }
 };
 
-mainGame(pool[0]); // main game test
+// mainGame(pool[0]); // main game test
 
 const bigGame = (num) => {
   for (let i = 0; i < num; i++) {

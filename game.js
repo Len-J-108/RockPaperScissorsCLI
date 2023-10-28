@@ -107,7 +107,8 @@ const game = async () => {
       // Show round no.
       console.clear();
       // Typewrite round no.
-      await typewriter(`ROUND ${i}\n\n Make a choice!\n`, 100);
+      await typewriter(`ROUND ${i}\n\n`, 100);
+      await typewriter(`Make a choice!\n`, 40);
       // Wait
       await wait(400);
       // Get gameChoice from User

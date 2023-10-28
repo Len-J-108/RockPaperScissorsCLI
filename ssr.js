@@ -1,6 +1,6 @@
 'use strict';
 // pool of choices for the game
-const pool = ['Scissor', 'Rock', 'Paper'];
+export const pool = ['Scissor', 'Rock', 'Paper'];
 
 // freeze makes the pool uneditable
 Object.freeze(pool);
@@ -44,7 +44,9 @@ class Player {
 }
 //------------------------------------------------------------------------------------
 // create instance fo Player
-const playerOne = new Player('Charly', 0, 0);
+export const playerModel = (name) => {
+  return new Player(name, 0, 0);
+};
 //------------------------------------------------------------------------------------
 // class tesing
 // console.log(playerOne.showPlayerdetails());
@@ -71,7 +73,7 @@ const playerOne = new Player('Charly', 0, 0);
     when b wins: res is 1
     if their even: res is 0*/
 
-function compare(a, b) {
+export function compare(a, b) {
   if (a === b) {
     return 0;
   }
@@ -102,7 +104,7 @@ function compare(a, b) {
 
 // randon Function ----> Math.floor(Math.random() * (max - min + 1) + min) <----
 
-const chooseRandom = () => {
+export const chooseRandom = () => {
   return Math.floor(Math.random() * 3); // between 0 and 2 (indices of pool)
 };
 
@@ -112,7 +114,9 @@ const chooseRandom = () => {
 // Main Game
 
 //single Game Function with compare as inner function
-const singleGame = (valA, valB = pool[chooseRandom()]) => {
+export const singleGame = (valA, valB = pool[chooseRandom()]) => {
+  // Get corresponding name from pool array
+  valA = pool[valA - 1];
   console.log(`${valA} : ${valB}`);
   return compare(valA, valB);
 };
@@ -121,7 +125,8 @@ singleGame(pool[1], pool[0]); // singlGame test
 
 //function
 let count = { countA: 0, countB: 0 };
-const mainGame = (val) => {
+
+export const mainGame = (val) => {
   let { countA, countB } = count;
   let i = 1;
   while (countA + countB < 3) {

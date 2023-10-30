@@ -1,6 +1,7 @@
 import { pool, compare, playerModel, chooseRandom, singleGame } from './ssr.js';
 import readline from 'readline';
 import typewriter from './typeWrite.js';
+import chalk from 'chalk';
 
 // Initialize player variable
 let player = {};
@@ -64,8 +65,9 @@ const getChoiceFromUser = async () => {
   // await typewriter(infoText);
   // Get choice from readline
   const choice = await new Promise((resolve) => {
-    rl.question('\n => ', (input) => {
+    rl.question(chalk.green('\n => '), (input) => {
       // Check if input is a nmumber between 1-3
+      input = input.trim();
       if (/^[1-3]/.test(input)) {
         // Convert input to number
         input = +input;
@@ -78,6 +80,9 @@ const getChoiceFromUser = async () => {
         (async () => {
           await wait(25); // delay (otherwise JS messed up the text)
           await typewriter(infoText, 25);
+          await wait(1800);
+          console.clear();
+          await typewriter(`Make a choice!\n`, 40);
           resolve(getChoiceFromUser());
         })();
         // recursive recall of function
@@ -117,10 +122,18 @@ const game = async () => {
 
       // Enter game logic
       const res = singleGame(userChoice);
-      res === 0 ? console.log(player.evenMsg()) : res < 0 ? countA++ : countB++;
-      console.log(`${player.userName}: ${countA} / computer: ${countB}
-        
-        `);
+      res === 0
+        ? console.log(chalk.black.bgYellow(player.evenMsg()))
+        : res < 0
+        ? countA++
+        : countB++;
+      console.log(
+        '\n\n',
+        chalk.bgWhite.black(`${player.userName}: ${countA} `) + '  ',
+        chalk.bgBlack.white(`Computer: ${countB}`),
+
+        '\n\n'
+      );
 
       // Wait
       await wait(2000);
@@ -128,15 +141,11 @@ const game = async () => {
     }
     // Define who won
     if (countA > 1) {
-      player.addToScore();
-      player.amountOfPlayedGames++;
-      console.log(player.userName, player.winMsg());
+      console.log(chalk.bgGreen.black(player.userName, player.winMsg()));
     }
     if (countB > 1) {
-      player.amountOfPlayedGames++;
-      console.log(player.userName, player.looseMsg());
+      console.log(chalk.bgRed.black(player.userName, player.looseMsg()));
     }
-
     // Wait, then end the programm
     await wait(3000); // wait
     rl.close(); // end readline

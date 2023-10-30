@@ -1,21 +1,17 @@
 'use strict';
+
+import chalk from 'chalk';
+
 // pool of choices for the game
 export const pool = ['Scissor', 'Rock', 'Paper'];
 
 // freeze makes the pool uneditable
 Object.freeze(pool);
-// console.log(pool);
 //------------------------------------------------------------------------------------
 //   player class
 class Player {
-  constructor(userName, score = 0, amountOfPlayedGames = 0) {
+  constructor(userName) {
     this.userName = userName;
-    this.score = score;
-    this.amountOfPlayedGames = amountOfPlayedGames;
-  }
-  showPlayerdetails() {
-    console.log(`Name: ${this.userName}`);
-    console.log(`Score: ${this.score}`);
   }
   winMsg() {
     return `, you won!`;
@@ -24,22 +20,7 @@ class Player {
     return `, you lost!`;
   }
   evenMsg() {
-    return `even...
-    
-    `;
-  }
-  addToScore() {
-    this.score++;
-  }
-  showScore() {
-    return `Ỳou have won ${this.score} games so far...`;
-  }
-  showAmountOfPlayedGames() {
-    return `You have played ${this.amountOfPlayedGames} so far...carry on!`;
-  }
-  showStatistic() {
-    const stat = (this.score / this.amountOfPlayedGames) * 100;
-    return `You have won ${stat}% of all games.`;
+    return `\nEven...`;
   }
 }
 //------------------------------------------------------------------------------------
@@ -47,17 +28,6 @@ class Player {
 export const playerModel = (name) => {
   return new Player(name, 0, 0);
 };
-//------------------------------------------------------------------------------------
-// class tesing
-// console.log(playerOne.showPlayerdetails());
-
-// console.log(playerOne.winMsg());
-// console.log(playerOne.looseMsg());
-// console.log(playerOne.evenMsg());
-
-// console.log(playerOne.showScore());;
-// console.log(playerOne.showAmountOfPlayedGames());
-// console.log(playerOne.showStatistic());
 //------------------------------------------------------------------------------------
 
 // Game Logic
@@ -117,52 +87,9 @@ export const chooseRandom = () => {
 export const singleGame = (valA, valB = pool[chooseRandom()]) => {
   // Get corresponding name from pool array
   valA = pool[valA - 1];
-  console.log(`${valA} : ${valB}`);
+  console.log(
+    chalk.bgWhite.black(`${valA}`) + ' : ',
+    chalk.bgBlack.white(`${valB}`)
+  );
   return compare(valA, valB);
 };
-singleGame(pool[1], pool[0]); // singlGame test
-// console.log(singleGame(pool[1], pool[0]));
-
-//function
-let count = { countA: 0, countB: 0 };
-
-export const mainGame = (val) => {
-  let { countA, countB } = count;
-  let i = 1;
-  while (countA + countB < 3) {
-    console.log(`ROUND ${i}`);
-    const game = singleGame(val);
-    game === 0
-      ? console.log(playerOne.evenMsg())
-      : game < 0
-      ? countA++
-      : countB++;
-    console.log(`${playerOne.userName}: ${countA} / computer: ${countB}
-      
-      `);
-    i++;
-  }
-  if (countA > 1) {
-    playerOne.addToScore();
-    playerOne.amountOfPlayedGames++;
-    return console.log(playerOne.userName, playerOne.winMsg());
-  }
-  if (countB > 1) {
-    playerOne.amountOfPlayedGames++;
-    return console.log(playerOne.userName, playerOne.looseMsg());
-  }
-};
-
-// mainGame(pool[0]); // main game test
-
-const bigGame = (num) => {
-  for (let i = 0; i < num; i++) {
-    console.log(`G A M E : ${i + 1}`);
-    mainGame(pool[chooseRandom()]);
-  }
-  console.log(playerOne.showAmountOfPlayedGames());
-  console.log(playerOne.showScore());
-  console.log(playerOne.showStatistic());
-  return;
-};
-// bigGame(8); // big game test

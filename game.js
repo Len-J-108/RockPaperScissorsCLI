@@ -128,15 +128,12 @@ const game = async () => {
         ? countA++
         : countB++;
       console.log(
-        '\n\n',
-        chalk.bgWhite.black(`${player.userName}: ${countA} `) + '  ',
-        chalk.bgBlack.white(`Computer: ${countB}`),
-
-        '\n\n'
+        '\n\n' + chalk.bgWhite.black(`${player.userName}: ${countA} `) + '  ',
+        chalk.bgBlack.white(`Computer: ${countB}`) + '\n\n'
       );
 
       // Wait
-      await wait(2000);
+      await wait(4000);
       i++;
     }
     // Define who won

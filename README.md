@@ -27,3 +27,10 @@ Feel free to contribute to this project by submitting issues, fixing bugs, or su
 // Include any additional sections such as license, acknowledgements, etc.
 
 Enjoy the game!
+
+
+![](./readme-images/one.png)
+![](./readme-images/two.png)
+![](./readme-images/three.png)
+![](./readme-images/four.png)
+![](./readme-images/five.png)

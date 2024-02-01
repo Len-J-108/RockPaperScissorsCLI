@@ -19,6 +19,8 @@ This project is built using the following technologies:
 - npm install
 - node game.js
 
+## Stats:
+http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username={Len-J108}&theme={github_dark}&exclude={exclude}
 
 ## Contributing
 
